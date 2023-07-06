@@ -156,6 +156,7 @@ const CartPrice = styled.span`
 const CartIcon = styled.p`
   font-size: 1rem;
   font-weight: 700;
+  cursor: pointer;
 `;
 
 const ButtonCheckOut = styled.button`
@@ -176,7 +177,7 @@ const Navbar = ({ counter }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
-
+  
   const ref = useRef(null)
 
   useEffect(() => {
@@ -185,18 +186,16 @@ const Navbar = ({ counter }) => {
 
   useEffect(() => {
     const handleOutsideClick = (e) => {
-      if (!ref.current.contains(e.target)) {
+      if (ref.current && !ref.current.contains(e.target)) {
         setOpen(false)
-      }
-    };
-
+      } 
+    }; 
     document.addEventListener('click', handleOutsideClick, true)
 
     return () => {
       document.removeEventListener('click', handleOutsideClick, true);
     };
-  }, []);
-
+  }, [open]);
 
   return (
     <Div>
@@ -225,12 +224,12 @@ const Navbar = ({ counter }) => {
           </NavbarList>
         </Div>
 
-        <Div>
+        <Div ref={ref}>
           <CartButton onClick={() => setOpen(!open)}>
             <BsCart3 size={20} />
           </CartButton>
 
-          <CartContainer open={open} ref={ref}>
+          <CartContainer open={open}>
             <CartTitle>Cart</CartTitle>
 
             {counter === 0 ? (
