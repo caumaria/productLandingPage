@@ -195,7 +195,7 @@ const Navbar = ({ counter }) => {
     return () => {
       document.removeEventListener('click', handleOutsideClick, true);
     };
-  }, [open]);
+  }, []);
 
   return (
     <Div>
