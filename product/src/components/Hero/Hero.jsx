@@ -1,6 +1,7 @@
 import Carousel from "./Carousel";
 import styled from "styled-components";
 import PropTypes from "prop-types";
+import { Item } from "./Item";
 
 const ConteinerFlex = styled.div`
   display: flex;
@@ -120,8 +121,7 @@ const Center = styled.div`
   gap: 1rem;
 `;
 
-const Hero = ({counter, setCounter}) => {
-
+const Hero = ({ counter, setCounter }) => {
   const decrease = () => {
     if (counter > 0) {
       setCounter((count) => count - 1);
@@ -134,36 +134,34 @@ const Hero = ({counter, setCounter}) => {
         <Carousel />
 
         <ItemContainer>
-          <div>
-            <P>Sneaker Company</P>
-            <h1>Fall Limited Edition Sneakers</h1>
-            <About>
-              These low-profile sneakers are your perfect casual wear companion.
-              Featuring a durable rubber outer sole, they will withstand
-              everything the weather can offer.
-            </About>
+          {Item.map((item, i) => {
+            return (
+              <div key={i}>
+                <P>Sneaker Company</P>
+                <h1>{item.promo}</h1>
+                <About>{item.about}</About>
+                <div>
+                  <Div>
+                    <div>{item.price}</div> <span>50%</span>
+                  </Div>
+                  <Discont>{item.discount}</Discont>
+                </div>
 
-            <div>
-              <Div>
-                <div>$125.00</div> <span>50%</span>
-              </Div>
-              <Discont>$250.00</Discont>
-            </div>
-
-            <Center>
-              <Btns>
-                <AddRemove onClick={decrease}>-</AddRemove>
-                <Counter>{counter}</Counter>
-                <AddRemove onClick={() => setCounter((count) => count + 1)}>
-                  +
-                </AddRemove>
-              </Btns>
-
-              <AddCart>
-                <span>Add to cart</span>
-              </AddCart>
-            </Center>
-          </div>
+                <Center>
+                  <Btns>
+                    <AddRemove onClick={decrease}>-</AddRemove>
+                    <Counter>{counter}</Counter>
+                    <AddRemove onClick={() => setCounter((count) => count + 1)}>
+                      +
+                    </AddRemove>
+                  </Btns>
+                  <AddCart>
+                    <span>Add to cart</span>
+                  </AddCart>
+                </Center>
+              </div>
+            );
+          })}
         </ItemContainer>
       </HeroDiv>
     </ConteinerFlex>
@@ -172,7 +170,7 @@ const Hero = ({counter, setCounter}) => {
 
 Hero.propTypes = {
   counter: PropTypes.number.isRequired,
-  setCounter: PropTypes.func.isRequired
+  setCounter: PropTypes.func.isRequired,
 };
 
 export default Hero;

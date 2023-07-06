@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
 import { BsCart3 } from "react-icons/Bs";
 import PropTypes from "prop-types";
@@ -18,12 +18,14 @@ const Div = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 2rem;
 `;
 
 const LogoContainer = styled.div`
   color: black;
   font-size: 2.2rem;
   font-weight: 900;
+  margin-left: 1.5rem;
 
   a {
     text-decoration: none;
@@ -69,7 +71,7 @@ const IconContainer = styled.div`
   display: flex;
   justify-content: space-around;
   align-items: center;
-  width: 10rem;
+  margin-right: 1.5rem;
 `;
 
 const Icon = styled.div`
@@ -86,14 +88,13 @@ const Icon = styled.div`
     display: none;
   }
 
-  &:nth-child(2):hover {
+  :hover {
     border: 2px solid orange;
   }
 `;
 
 const MenuIcon = styled.i`
   display: block;
-  margin-left: 8rem;
   cursor: pointer;
 
   @media screen and (min-width: 760px) {
@@ -119,7 +120,7 @@ const CartContainer = styled.div`
   box-shadow: 2px 2px 8px 2px rgb(213, 212, 212);
   position: fixed;
   top: 10%;
-  right: 10%;
+
 `;
 
 const CartTitle = styled.div`
@@ -176,9 +177,26 @@ const Navbar = ({ counter }) => {
   const [open, setOpen] = useState(false);
   const [total, setTotal] = useState(0);
 
-  useEffect (() => {
-    setTotal(125 * counter)
-  }, [counter])
+  const ref = useRef(null)
+
+  useEffect(() => {
+    setTotal(125 * counter);
+  }, [counter]);
+
+  useEffect(() => {
+    const handleOutsideClick = (e) => {
+      if (!ref.current.contains(e.target)) {
+        setOpen(false)
+      }
+    };
+
+    document.addEventListener('click', handleOutsideClick, true)
+
+    return () => {
+      document.removeEventListener('click', handleOutsideClick, true);
+    };
+  }, []);
+
 
   return (
     <Div>
@@ -208,52 +226,52 @@ const Navbar = ({ counter }) => {
         </Div>
 
         <Div>
-          <IconContainer
-            showMenu={showMenu}
-            onClick={() => setShowMenu(!showMenu)}
-          >
-            
-            <div>
-              <CartButton onClick={() => setOpen(!open)}
-              >
-                <BsCart3 size={20} />
-              </CartButton>
+          <CartButton onClick={() => setOpen(!open)}>
+            <BsCart3 size={20} />
+          </CartButton>
 
-              <CartContainer open={open}>
-                <CartTitle>Cart</CartTitle>
+          <CartContainer open={open} ref={ref}>
+            <CartTitle>Cart</CartTitle>
 
-                {
-                  
-                }
+            {counter === 0 ? (
+              <TotalContainer>
+                <CartP>Empty</CartP>
+              </TotalContainer>
+            ) : (
+              <div>
+                <TotalContainer>
+                  <CartImg src="image-product-1.jpg" />
+                  <div>
+                    <CartP>Fall Limited Edition Sneakers</CartP>
+                    <CartP>
+                      $125.00 x {counter} <CartPrice>: ${total}</CartPrice>
+                    </CartP>
+                  </div>
+                  <CartIcon>🗑</CartIcon>
+                </TotalContainer>
+                <TotalContainer>
+                  <ButtonCheckOut>Checkout</ButtonCheckOut>
+                </TotalContainer>
+              </div>
+            )}
+          </CartContainer>
+          <Div>
+            <IconContainer
+              showMenu={showMenu}
+              onClick={() => setShowMenu(!showMenu)}
+            >
+              <Icon>
+                <img
+                  style={{ width: "2.4rem", height: "2.4rem" }}
+                  src="/image-avatar.png"
+                />
+              </Icon>
 
-                <div>
-                  <TotalContainer>
-                    <CartImg src="image-product-1.jpg" />
-                    <div>
-                      <CartP>Fall Limited Edition Sneakers</CartP>
-                      <CartP>
-                        $125.00 x {counter} <CartPrice>R${total}</CartPrice>
-                      </CartP>
-                    </div>
-                    <CartIcon>🗑</CartIcon>
-                  </TotalContainer>
-                  <TotalContainer>
-                    <ButtonCheckOut>Checkout</ButtonCheckOut>
-                  </TotalContainer>
-                </div>
-              </CartContainer>
-            </div>
-
-            <Icon>
-              <img
-                style={{ width: "2.4rem", height: "2.4rem" }}
-                src="/image-avatar.png"
-              />
-            </Icon>
-            <MenuIcon
-              className={showMenu ? "fa fa-times" : "fa fa-bars"}
-            ></MenuIcon>
-          </IconContainer>
+              <MenuIcon
+                className={showMenu ? "fa fa-times" : "fa fa-bars"}
+              ></MenuIcon>
+            </IconContainer>
+          </Div>
         </Div>
       </NavbarContainer>
     </Div>
