@@ -1,6 +1,5 @@
 import { useState, useEffect, useRef } from "react";
 import styled from "styled-components";
-import { BsCart3 } from "react-icons/Bs";
 import PropTypes from "prop-types";
 
 const NavbarContainer = styled.nav`
@@ -226,7 +225,7 @@ const Navbar = ({ counter }) => {
 
         <Div ref={ref}>
           <CartButton onClick={() => setOpen(!open)}>
-            <BsCart3 size={20} />
+            🛒
           </CartButton>
 
           <CartContainer open={open}>
