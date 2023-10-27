@@ -4,6 +4,10 @@ Landing Page for product - Redo <br> <br>
 
 ![image](https://github.com/caumaria/productLandingPage/assets/88352423/fbde7409-6f87-43ec-8ba4-88bd12d545b1)
 
+Principal objetivo: Aprender a fazer uma página para venda de produtos, Carrousel de Imagem, Dropdown Menu e layout responsivo.<br>
+Detalhes e responsabilidades: Esta é uma Landing Page para produtos, com design simples e moderno, este foi um desafio do site frontendmentor de nível intermediário.<br>
+Resultado: Este foi um dos meus primeiros projetos React Js, primeiro construí usando Sass, mas encontrei dificuldades no caminho e tive que refazer, acabei usando styled componetns porque estava aprendendo na época.<br>
+Tecnologias utilizadas: React Js, Styled Components<br>
 
 # 🧠 About
 
